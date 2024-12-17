@@ -4,7 +4,9 @@ import json
 # 读取地址列表的函数
 def load_addresses(file_path):
     with open(file_path, "r") as f:
-        return json.load(f)
+        # 读取文件中的每一行地址，去除可能的空白字符
+        addresses = [line.strip() for line in f.readlines()]
+    return addresses
 
 # API URL
 url = "https://api.clusters.xyz/v0.1/airdrops/pengu/eligibility/"
@@ -51,7 +53,7 @@ def check_eligibility(addresses):
 # 主函数
 def main():
     # 读取地址文件
-    addresses = load_addresses("addresses.json")
+    addresses = load_addresses("addresses.txt")  # 修改为读取 .txt 文件
     
     # 执行批量查询
     eligibility_results, eligible_count, ineligible_count, failed_count, total_tokens = check_eligibility(addresses)
